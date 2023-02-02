@@ -1,0 +1,26 @@
+.users-list {
+    box-shadow: 0 4px 8px 0 rgba(202, 22, 22, 0.2);
+    width: 100%;
+    margin: auto;
+    font-size: 1rem;
+    font-family: arial;
+    display: flex;
+    font-weight: normal;
+    text-align: left;
+  }
+.user-item{
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 2rem 2rem 2rem 2rem;
+    padding: 2rem 2rem 2rem 2rem;
+}
+.users-list-heading{
+  box-shadow: 0 4px 8px 0 rgba(202, 22, 22, 0.2);
+  width: 100%;
+  margin: auto;
+  font-size: 1rem;
+  font-family: arial;
+  display: flex;
+  font-weight: bold;
+  text-align: left; 
+}
