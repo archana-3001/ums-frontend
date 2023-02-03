@@ -33,17 +33,18 @@ export const UserComponent=(props: any)=>{
     const [editactive, setEditactive]=useState(false);
     const [editadmin, setEditadmin]=useState(false);
     const [editphone, setEditphone]=useState(false);
-    const [uattribute, setuAttribute]=useState<string | boolean>("");
+
     const inputFirst_name = useRef<HTMLInputElement>(null);
-    
+    const [active, setActive] =useState("");
+    const [admin, setAdmin]=useState("");
     const init_users=()=>{
-        formData.First_name= props.user.first_name,
-        formData.Last_name= props.user.last_name,
-        formData.Password= props.user.password,
-        formData.email=props.user.email,
-        formData.Phone_number=props.user.phone_number,
-        formData.Is_active=props.user.is_active,
-        formData.Is_admin=props.user.is_admin
+        formData.First_name= ""
+        formData.Last_name= ""
+        formData.Password= ""
+        formData.email=""
+        formData.Phone_number=""
+        formData.Is_active=""
+        formData.Is_admin=""
     }
 
     const saveEditfirst=async(event: any)=>{
@@ -99,51 +100,73 @@ export const UserComponent=(props: any)=>{
         formData.Phone_number=val;
         // console.log(formData)
         setEditphone(false);
+        event.stopPropagation();
     }
 
     const saveEditactive=async(event: any)=>{
         event?.preventDefault();
         // console.log(inputReference.current?.name);
-        const key=inputFirst_name.current?.id;
-        const val=inputFirst_name.current?.checked;
-        console.log(key, val, typeof(key), typeof(val));
-        formData.Is_active=val;
+        if(active!=""){
+            console.log(active);
+            formData.Is_admin=admin
+        }
         // console.log(formData);
         setEditactive(false);
+        event.stopPropagation();
     }
     const saveEditadmin=async(event: any)=>{
         event?.preventDefault();
-        // console.log(inputReference.current?.name);
-        const key=inputFirst_name.current?.id;
-        const val=inputFirst_name.current?.checked;
-        console.log(key, val, typeof(key), typeof(val));
-        formData.Is_admin=val;;
+        // console.log(inputReference.current?.name)
+        if(admin!=""){
+            console.log(admin, typeof(admin));
+            formData.Is_admin=admin
+        }
         // console.log(formData);
         setEditadmin(false);
+        event.stopPropagation();
     }
+
+    const deleteuser=async(id: string)=>{
+        const fetchOptions = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+        };
+        console.log("here put request ", id);
+        const response = await fetch(url+'?ID='+id, fetchOptions).then(val=>{
+            console.log(val);
+            init_users();
+        }).catch(err=>{
+            console.log(err);
+        });
+        init_users();
+    }
+
 
     const update=async(id: string)=>{
         // event?.preventDefault();
-        console.log(id);
-        if(formData.First_name=="" || formData.First_name==props.user.first_name){
+        console.log(id, formData);
+        if(formData.First_name==""){
             delete formData.First_name;
         }
-        if(formData.Last_name=="" || formData.Last_name==props.user.last_name){
+        if(formData.Last_name=="" ){
             delete formData.Last_name;
         }
-        if(formData.Password=="" || formData.Password==props.user.password){
+        if(formData.Password=="" ){
             delete formData.Password;
         }
-        if(formData.email=="" || formData.email==props.user.email){
+        if(formData.email==""){
             delete formData.email;
         }
-        if(formData.Phone_number=="" || formData.Phone_number==props.user.phone_number){
+        if(formData.Phone_number=="" ){
             delete formData.Phone_number;
         }
-        if(formData.Is_active==props.user.is_active || formData.Is_active==""){
+        if(formData.Is_active==""){
             delete formData.Is_active;
         }
-        if(formData.Is_admin==props.user.is_admin || formData.Is_admin==""){
+        if(formData.Is_admin==""){
             delete formData.Is_admin;
         }
         const fetchOptions = {
@@ -187,10 +210,11 @@ export const UserComponent=(props: any)=>{
     }
 
 return(<>
+        {/* {console.log(props.user)} */}
     <tr className="users-list" key="{user.id}">
-                    <td className="user-item">{(props.user.id).substring(0, 5)}</td>
-                    <td className="user-item">{props.user.username}</td>
-                    <td className="user-item">{props.user.first_name}
+                    <td className="user-item">{(props.user?.id)?.substring(0, 5)}</td>
+                    <td className="user-item">{props.user?.username}</td>
+                    <td className="user-item">{props.user?.first_name}
                     <FaEdit onClick={()=>{setEditfirst(!editfirst)}}/>
                     {
                         (editfirst)?
@@ -202,7 +226,7 @@ return(<>
                         : <></>
                     }
                     </td>
-                    <td className="user-item">{props.user.last_name}<FaEdit onClick={()=>{setEditlast(!editlast)}}/>
+                    <td className="user-item">{props.user?.last_name}<FaEdit onClick={()=>{setEditlast(!editlast)}}/>
                     {
                         (editlast)?
                         <form>
@@ -213,7 +237,7 @@ return(<>
                         : <></>
                     }
                     </td>
-                    <td className="user-item">{props.user.email}<FaEdit onClick={()=>{setEditmail(!editmail)}}/>
+                    <td className="user-item">{props.user?.email}<FaEdit onClick={()=>{setEditmail(!editmail)}}/>
                     {
                         (editmail)?
                         <form>
@@ -235,7 +259,7 @@ return(<>
                         : <></>
                     }
                     </td>
-                    <td className="user-item">{props.user.phone_number}<FaEdit onClick={()=>{setEditphone(!editphone)}}/>
+                    <td className="user-item">{props.user?.phone_number}<FaEdit onClick={()=>{setEditphone(!editphone)}}/>
                     {
                         (editphone)?
                         <form>
@@ -245,31 +269,36 @@ return(<>
                         
                         : <></>
                     }</td>
-                    <td className="user-item">{String(props.user.is_active)}<FaEdit onClick={()=>{setEditactive(!editactive)}}/>
+                    <td className="user-item">{String(props.user?.is_active)}<FaEdit onClick={()=>{setEditactive(!editactive)}}/>
                     {
                         (editactive)?
                         <form>
-                            <input id="Is_active" type="checkbox"  placeholder="enter value" ref={inputFirst_name}/>
+                            yes<input type="checkbox" checked={active === "true"} onChange={() => setActive("true")}/>&ensp;
+                            no <input type="checkbox" checked={active === "false"} onChange={() => setActive("false")}/><br/>
                             <button  onClick={saveEditactive}>confirm</button>
                         </form>
                         
                         : <></>
                     }</td>
-                    <td className="user-item">{String(props.user.is_active)}<FaEdit onClick={()=>{setEditadmin(!editadmin)}}/>
+                    <td className="user-item">{String(props.user?.is_admin)}<FaEdit onClick={()=>{setEditadmin(!editadmin)}}/>
                     {
                         (editadmin)?
                         <form>
-                            <input id="Is_admin" type="checkbox"  placeholder="enter value" ref={inputFirst_name}/>
+                            yes<input type="checkbox" checked={admin=== "true"} onChange={() => setAdmin("true")}/>&ensp;
+                            no <input type="checkbox" checked={admin === "false"} onChange={() => setAdmin("false")}/><br/>
                             <button  onClick={saveEditadmin}>confirm</button>
                         </form>
                         
                         : <></>
                     }</td>
                     <td className="user-item">
-                        <button onClick={()=>{update(props.user.id)}}>update</button>
+                        <button onClick={()=>{update(props.user?.id)}}>update</button>
                     </td>
                     <td className="user-item">
-                        <button onClick={()=>{updateAll(props.user.id)}}>update All</button>
+                        <button onClick={()=>{updateAll(props.user?.id)}}>update All</button>
+                    </td>
+                    <td className="user-item">
+                        <button onClick={()=>{deleteuser(props.user?.id)}}>delete</button>
                     </td>
 
                 </tr>

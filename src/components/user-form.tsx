@@ -46,10 +46,12 @@ export default function UserForm() {
             };
             console.log(fetchOptions.body);
             const response = await fetch(url, fetchOptions).then(val=>{
+                alert('user created');
                 console.log(val);
             }).catch(err=>{
                 console.log(err);
             });
+
     }
     return (
         <>
@@ -73,6 +75,7 @@ export default function UserForm() {
                 <input type="password"  id="password" ref={inputPassword} placeholder="Password" />
                 <br/>
                 <button type="submit" onClick={createUser}>Create</button>
+                <button type="reset">Reset</button>
             </form>
         </>
     )

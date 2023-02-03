@@ -1,43 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { isPropertySignature } from "typescript";
 
 
 import { UserComponent } from "./userComponent";
 
-interface userProperties{
-    first_name: string,
-    last_name: string,
-    email: string,
-    password: string,
-    is_active: boolean,
-    is_admin: boolean,
-    phone_number: string,
-    id: string,
-    username: string
-}
 
-export const ListAllUsers=()=>{
-    const [users, setUsers]=useState<userProperties[]>([]);
 
-    useEffect(()=>{
-        const url='http://localhost:8000/api/users';
-        const getAllUsers=async ()=>{
-            const response=await fetch(url);
-            const json: []=await response.json();
-            var arr: userProperties[]=[]
-            Object.values(json).forEach(data=>{
-                // console.log(data);
-                arr.push(data);
-                setUsers([...arr]);
-            })
-            setUsers([...arr]);
-            // console.log(users);
-        }
-        getAllUsers();
-        
-    }, []);
-    
-    
-
+export const ListAllUsers=(props: any)=>{
     return(
         <>
         list all users 
@@ -76,11 +45,13 @@ export const ListAllUsers=()=>{
 
         {
             
-                users.map(user=>{
-                // console.log(user.id, typeof(user.id))
+            props.users.map((usr: Object)=>{
+
+                // console.log("from listAllUsers",usr)
                 return(
                 <>
-                <UserComponent user={user} />
+                <UserComponent user={usr}  />
+                
                 </>
                 )
                 
