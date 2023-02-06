@@ -1,5 +1,4 @@
 import UserForm from "@/components/user-form";
-import UserUpdate from "@/components/user-update";
 import { Layout } from "@/components/layout";
 import { ManageUsers } from "@/components/manageUsers";
 import { useEffect, useState } from "react";
