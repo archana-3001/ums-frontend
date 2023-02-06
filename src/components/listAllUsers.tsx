@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { UserContext } from "@/state/RefreshContext";
+import { useContext, useEffect, useRef, useState } from "react";
 import { isPropertySignature } from "typescript";
 
 
@@ -6,13 +7,15 @@ import { UserComponent } from "./userComponent";
 
 
 
-export const ListAllUsers=(props: any)=>{
+export const ListAllUsers=()=>{
+    const {user, setUser}=useContext<any>(UserContext);
     return(
         <>
         list all users 
         <table>
         
-                <th className="users-list-heading">
+                <thead className="users-list-heading">
+                <tr>
                     <td className="user-item">
                         id
                     </td>
@@ -40,12 +43,14 @@ export const ListAllUsers=(props: any)=>{
                     <td className="user-item">
                         admin
                     </td>
-                </th>
+                    </tr>
+                </thead>
+
         
 
         {
             
-            props.users.map((usr: Object)=>{
+            user.map((usr: Object)=>{
 
                 // console.log("from listAllUsers",usr)
                 return(

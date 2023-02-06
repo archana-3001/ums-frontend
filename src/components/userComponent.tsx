@@ -1,6 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import {FaEdit} from  'react-icons/fa';
 import uuid from 'uuid';
+import {RefreshContext} from "@/state/RefreshContext";
+
 
 interface FormData{
     First_name?: string,
@@ -26,6 +28,8 @@ const formData: FormData={
 const url='http://localhost:8000/api/users';
 
 export const UserComponent=(props: any)=>{
+
+    const {refresh, setRefresh}=useContext(RefreshContext);
     const [editfirst, setEditfirst]=useState(false);
     const [editlast, setEditlast]=useState(false);
     const [editpass, setEditpass]=useState(false);
@@ -100,7 +104,6 @@ export const UserComponent=(props: any)=>{
         formData.Phone_number=val;
         // console.log(formData)
         setEditphone(false);
-        event.stopPropagation();
     }
 
     const saveEditactive=async(event: any)=>{
@@ -112,7 +115,7 @@ export const UserComponent=(props: any)=>{
         }
         // console.log(formData);
         setEditactive(false);
-        event.stopPropagation();
+
     }
     const saveEditadmin=async(event: any)=>{
         event?.preventDefault();
@@ -123,7 +126,6 @@ export const UserComponent=(props: any)=>{
         }
         // console.log(formData);
         setEditadmin(false);
-        event.stopPropagation();
     }
 
     const deleteuser=async(id: string)=>{
@@ -135,13 +137,15 @@ export const UserComponent=(props: any)=>{
             },
         };
         console.log("here put request ", id);
-        const response = await fetch(url+'?ID='+id, fetchOptions).then(val=>{
+        await fetch(url+'?ID='+id, fetchOptions).then(val=>{
             console.log(val);
             init_users();
+            setRefresh(!refresh);
         }).catch(err=>{
             console.log(err);
         });
         init_users();
+        
     }
 
 
@@ -178,8 +182,9 @@ export const UserComponent=(props: any)=>{
             body: JSON.stringify(formData),
         };
         console.log("here", typeof(id), fetchOptions.body);
-        const response = await fetch(url+'?ID='+id, fetchOptions).then(val=>{
+        await fetch(url+'?ID='+id, fetchOptions).then(val=>{
             console.log(val);
+            setRefresh(!refresh);
             init_users();
         }).catch(err=>{
             console.log(err);
@@ -198,9 +203,10 @@ export const UserComponent=(props: any)=>{
             body: JSON.stringify(formData),
         };
         console.log("here put request ", id, fetchOptions.body);
-        const response = await fetch(url+'?ID='+id, fetchOptions).then(val=>{
+        await fetch(url+'?ID='+id, fetchOptions).then(val=>{
             console.log(val);
             init_users();
+            setRefresh(!refresh);
         }).catch(err=>{
             console.log(err);
         });
@@ -211,7 +217,7 @@ export const UserComponent=(props: any)=>{
 
 return(<>
         {/* {console.log(props.user)} */}
-    <tr className="users-list" key="{user.id}">
+    <tbody className="users-list" key="{user.id}">
                     <td className="user-item">{(props.user?.id)?.substring(0, 5)}</td>
                     <td className="user-item">{props.user?.username}</td>
                     <td className="user-item">{props.user?.first_name}
@@ -301,6 +307,6 @@ return(<>
                         <button onClick={()=>{deleteuser(props.user?.id)}}>delete</button>
                     </td>
 
-                </tr>
+                </tbody>
 </>);
 }

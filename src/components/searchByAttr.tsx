@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { ListAllUsers } from "./listAllUsers";
 import { UserComponent } from "./userComponent";
 const url='http://localhost:8000/api/users';
 import { ListComponent } from "./listComponet";
+import { UserContext } from "@/state/RefreshContext";
 
 
 interface userProperties{
@@ -17,7 +18,7 @@ interface userProperties{
     username: string
 }
 
-export const SearchByAttr=(props: any)=>{
+export const SearchByAttr=()=>{
     
     interface FormData{
         ID?: string,
@@ -32,12 +33,11 @@ export const SearchByAttr=(props: any)=>{
     const inputLast_name=useRef<HTMLInputElement>(null);
     const inputUsername = useRef<HTMLInputElement>(null);
 
-    const [components, setComponents]=useState(<></>);
 
     const [active, setActive] =useState("");
     const [admin, setAdmin]=useState("");
 
-    const [users, setUsers]=useState<userProperties[]>([]);
+    const {user, setUser}=useContext<any>(UserContext);
 
     const searchAtt=()=>{
         console.log(inputID.current?.value);
@@ -106,8 +106,7 @@ export const SearchByAttr=(props: any)=>{
                 // setUsers([...arr]);
             })
             // console.log(arr);
-            setUsers(arr);
-            setComponents(<ListAllUsers users={users}/>);
+            setUser(arr);
         }
         getAllUsers();
     }
@@ -125,7 +124,20 @@ export const SearchByAttr=(props: any)=>{
     no <input type="checkbox" checked={admin === "false"} onChange={() => setAdmin("false")}/>
 
     <button onClick={searchAtt}>search</button>
-    <ListComponent text={components}/>
+    {
+            
+            user.map((usr: Object)=>{
 
+                // console.log("from listAllUsers",usr)
+                return(
+                <>
+                <UserComponent user={usr}  />
+                
+                </>
+                )
+                
+            })    
+            
+        }
     </>)
 }

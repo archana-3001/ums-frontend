@@ -1,10 +1,12 @@
 import UserForm from "./user-form";
 import UserUpdate from "./user-update";
-import { useState } from 'react'; 
+import { useContext, useState } from 'react'; 
 import { ListComponent } from "./listComponet";
 import { ListAllUsers } from "./listAllUsers";
 import { SearchByAttr } from "./searchByAttr";
 import { useEffect } from "react";
+import {RefreshContext} from "@/state/RefreshContext";
+import { UserContext } from "@/state/RefreshContext";
 
 interface userProperties{
     first_name: string,
@@ -19,11 +21,12 @@ interface userProperties{
 }
 
 export const ManageUsers=()=>{
-    const [users, setUsers]=useState<userProperties[]>([]);
-    const [dummy, setdummy]=useState(false);
+    const {refresh, setRefresh}=useContext(RefreshContext);
+    // const [users, setUsers]=useState<userProperties[]>([]);
+    const {user, setUser}=useContext<any>(UserContext);
     const [components, setComponents] = useState(<UserForm/>); 
     useEffect(()=>{
-        console.log("refresh......");
+        console.log("refresh......", refresh);
         const url='http://localhost:8000/api/users';
         const getAllUsers=async ()=>{
             const response=await fetch(url);
@@ -34,12 +37,12 @@ export const ManageUsers=()=>{
                 arr.push(data);
                 // setUsers([...arr]);
             })
-            setUsers([...arr]);
+            setUser([...arr]);
             // console.log(users);
         }
         getAllUsers();
         
-    }, [components]);
+    }, [components, refresh]);
 const createUsers=async()=>{
     console.log("create users");
     setComponents(<UserForm/>);
@@ -48,12 +51,12 @@ const createUsers=async()=>{
 
 const updateUsers=async()=>{
     console.log("update users")
-    setComponents(<ListAllUsers users={users}/>);
+    setComponents(<ListAllUsers/>);
 }
 
 const searchUsers=async()=>{
     console.log("search users!!");
-    setComponents(<SearchByAttr users={users}/>)
+    setComponents(<SearchByAttr/>)
 }
     return(<>
     <nav className="user-bar">
