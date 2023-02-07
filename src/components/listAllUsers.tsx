@@ -1,11 +1,6 @@
 import { UserContext } from "@/state/RefreshContext";
 import { useContext, useEffect, useRef, useState } from "react";
-import { isPropertySignature } from "typescript";
-
-
 import { UserComponent } from "./userComponent";
-
-
 
 export const ListAllUsers=()=>{
     const {user, setUser}=useContext<any>(UserContext);

@@ -20,12 +20,12 @@ export const Nav=()=>{
         <nav className="nav-bar">
             <ul className="nav-content">
                 <li className="nav-list">
-                    <Link className="nav-link" href='/'>Login</Link>
+               <Link className="nav-link" href='/'>Login</Link>
                 </li>
                 {
                 (authorized)?<>
                 <li className="nav-list">
-                   <Link className="nav-link" href='/usersConfig'>Manage users</Link>
+              <Link className="nav-link" href='/usersConfig'>Manage users</Link>
                 </li>
                 <li className="nav-list">
                 <Link className="nav-link" href="/" onClick={logout}>Logout</Link>

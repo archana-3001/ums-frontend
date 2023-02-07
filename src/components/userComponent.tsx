@@ -1,8 +1,7 @@
 import { useState, useRef, useContext } from "react";
 import {FaEdit} from  'react-icons/fa';
-import uuid from 'uuid';
 import {RefreshContext} from "@/state/RefreshContext";
-import { tokenToString } from "typescript";
+
 
 
 interface FormData{
@@ -134,8 +133,8 @@ export const UserComponent=(props: any)=>{
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
-                Accept: "application/json",
-                Authorization: 'Bearer '+ token.token
+                    Accept: "application/json",
+                    Authorization: 'Bearer '+ token.token
             },
         };
         console.log("here put request ", id);
@@ -181,8 +180,8 @@ export const UserComponent=(props: any)=>{
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                Accept: "application/json",
-                Authorization: 'Bearer '+ token.token
+                    Accept: "application/json",
+                    Authorization: 'Bearer '+ token.token
                 
             },
             body: JSON.stringify(formData),
@@ -205,8 +204,8 @@ export const UserComponent=(props: any)=>{
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                Accept: "application/json",
-                Authorization: 'Bearer '+ token.token
+                    Accept: "application/json",
+                    Authorization: 'Bearer '+ token.token
             },
             body: JSON.stringify(formData),
         };

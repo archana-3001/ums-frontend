@@ -1,8 +1,6 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import LoginForm from '@/components/login-form'
-import UserForm from '@/components/user-form'
 import { Layout } from '@/components/layout'
 
 const inter = Inter({ subsets: ['latin'] })

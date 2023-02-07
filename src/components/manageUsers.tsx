@@ -24,11 +24,14 @@ export const ManageUsers=()=>{
     // const [users, setUsers]=useState<userProperties[]>([]);
     const {user, setUser}=useContext<any>(UserContext);
     const [components, setComponents] = useState(<UserForm/>); 
-    const token=JSON.parse(localStorage.getItem('token') || "");
+    
     
     useEffect(()=>{
         console.log("refresh......", refresh);
         // console.log(token.token);
+        const tok=localStorage.getItem('token') || "";
+        if(tok!=""){
+        const token=JSON.parse(tok);
         const fetchOptions = {
             method: "GET",
             headers: {
@@ -51,6 +54,7 @@ export const ManageUsers=()=>{
             // console.log(users);
         }
         getAllUsers();
+    }
         
     }, [components, refresh]);
 const createUsers=async()=>{

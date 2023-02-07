@@ -1,8 +1,6 @@
 import { useContext, useRef, useState } from "react";
-import { ListAllUsers } from "./listAllUsers";
 import { UserComponent } from "./userComponent";
 const url='http://localhost:8000/api/users';
-import { ListComponent } from "./listComponet";
 import { UserContext } from "@/state/RefreshContext";
 
 
