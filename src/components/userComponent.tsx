@@ -110,7 +110,7 @@ export const UserComponent=(props: any)=>{
         // console.log(inputReference.current?.name);
         if(active!=""){
             console.log(active);
-            formData.Is_admin=admin
+            formData.Is_active=active
         }
         // console.log(formData);
         setEditactive(false);
@@ -152,6 +152,7 @@ export const UserComponent=(props: any)=>{
 
     const update=async(id: string)=>{
         // event?.preventDefault();
+        const token=JSON.parse(localStorage.getItem('token') || "");
         console.log(id, formData);
         if(formData.First_name==""){
             delete formData.First_name;
@@ -174,7 +175,7 @@ export const UserComponent=(props: any)=>{
         if(formData.Is_admin==""){
             delete formData.Is_admin;
         }
-        const token=JSON.parse(localStorage.getItem('token') || "");
+        
     
         const fetchOptions = {
             method: "PATCH",
@@ -182,7 +183,6 @@ export const UserComponent=(props: any)=>{
                 "Content-Type": "application/json",
                     Accept: "application/json",
                     Authorization: 'Bearer '+ token.token
-                
             },
             body: JSON.stringify(formData),
         };
