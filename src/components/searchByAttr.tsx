@@ -93,20 +93,28 @@ export const SearchByAttr=()=>{
         console.log(filterUser);
         console.log("here get request with filter", newurl);
         const getAllUsers=async ()=>{
-            const response=await fetch(newurl);
+            const token=JSON.parse(localStorage.getItem('token') || "");
+            const fetchOptions = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: 'Bearer ' + token.token
+                },
+            };
+            const response=await fetch(newurl, fetchOptions);
+            if(response.status==404){
+                setUser([]);
+            }else{
             const json: userProperties[]=await response.json();
-            // console.log(json);
+            console.log(json)
             var arr: userProperties[]=[]
-            Object.values(json).forEach((data:any)=>{
-                data.forEach((d: any)=>{
-                    // console.log(d);
-                    arr.push(d);
-                })
-                
-                // setUsers([...arr]);
+            Object.values(json).forEach((data: any)=>{
+                    arr.push(data);
             })
-            // console.log(arr);
             setUser(arr);
+            }
+            
         }
         getAllUsers();
     }

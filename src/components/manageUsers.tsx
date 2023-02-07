@@ -1,5 +1,4 @@
 import UserForm from "./user-form";
-import UserUpdate from "./user-update";
 import { useContext, useState } from 'react'; 
 import { ListComponent } from "./listComponet";
 import { ListAllUsers } from "./listAllUsers";
@@ -25,11 +24,22 @@ export const ManageUsers=()=>{
     // const [users, setUsers]=useState<userProperties[]>([]);
     const {user, setUser}=useContext<any>(UserContext);
     const [components, setComponents] = useState(<UserForm/>); 
+    const token=JSON.parse(localStorage.getItem('token') || "");
+    
     useEffect(()=>{
         console.log("refresh......", refresh);
+        // console.log(token.token);
+        const fetchOptions = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: 'Bearer ' + token.token
+            },
+        };
         const url='http://localhost:8000/api/users';
         const getAllUsers=async ()=>{
-            const response=await fetch(url);
+            const response=await fetch(url, fetchOptions);
             const json: []=await response.json();
             var arr: userProperties[]=[]
             Object.values(json).forEach(data=>{

@@ -27,7 +27,10 @@ export default function LoginForm() {
     console.log(json);
     setAuthorized(json.Is_admin);
     if(json.Is_admin){
+      const ctime= new Date();
+      // console.log(ctime);
       const token = localStorage.setItem("token", JSON.stringify(json));
+      const endTime=localStorage.setItem("expire", JSON.stringify(ctime));
     }
   }
     return (

@@ -8,7 +8,7 @@ export const Nav=()=>{
     const tok=localStorage.getItem("token")|| "";
     if(tok!=""){
       const token = JSON.parse(tok);
-      console.log(token);
+      // console.log(token);
       setAuthorized(token.Is_admin);
     }
   }, [])

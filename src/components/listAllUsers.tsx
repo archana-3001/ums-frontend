@@ -12,7 +12,7 @@ export const ListAllUsers=()=>{
     return(
         <>
         list all users 
-        <table>
+        <table className="users-lists-table">
         
                 <thead className="users-list-heading">
                 <tr>
@@ -42,6 +42,15 @@ export const ListAllUsers=()=>{
                     </td>
                     <td className="user-item">
                         admin
+                    </td>
+                    <td className="user-item">
+                        update
+                    </td>
+                    <td className="user-item">
+                        update-all
+                    </td>
+                    <td className="user-item">
+                        delete
                     </td>
                     </tr>
                 </thead>

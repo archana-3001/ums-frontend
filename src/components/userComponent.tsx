@@ -2,6 +2,7 @@ import { useState, useRef, useContext } from "react";
 import {FaEdit} from  'react-icons/fa';
 import uuid from 'uuid';
 import {RefreshContext} from "@/state/RefreshContext";
+import { tokenToString } from "typescript";
 
 
 interface FormData{
@@ -28,7 +29,6 @@ const formData: FormData={
 const url='http://localhost:8000/api/users';
 
 export const UserComponent=(props: any)=>{
-
     const {refresh, setRefresh}=useContext(RefreshContext);
     const [editfirst, setEditfirst]=useState(false);
     const [editlast, setEditlast]=useState(false);
@@ -129,11 +129,13 @@ export const UserComponent=(props: any)=>{
     }
 
     const deleteuser=async(id: string)=>{
+        const token=JSON.parse(localStorage.getItem('token') || "");
         const fetchOptions = {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
+                Authorization: 'Bearer '+ token.token
             },
         };
         console.log("here put request ", id);
@@ -173,11 +175,15 @@ export const UserComponent=(props: any)=>{
         if(formData.Is_admin==""){
             delete formData.Is_admin;
         }
+        const token=JSON.parse(localStorage.getItem('token') || "");
+    
         const fetchOptions = {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
+                Authorization: 'Bearer '+ token.token
+                
             },
             body: JSON.stringify(formData),
         };
@@ -194,11 +200,13 @@ export const UserComponent=(props: any)=>{
     }
 
     const updateAll=async(id: string)=>{
+        const token=JSON.parse(localStorage.getItem('token') || "");
         const fetchOptions = {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
+                Authorization: 'Bearer '+ token.token
             },
             body: JSON.stringify(formData),
         };
@@ -218,6 +226,7 @@ export const UserComponent=(props: any)=>{
 return(<>
         {/* {console.log(props.user)} */}
     <tbody className="users-list" key="{user.id}">
+        <tr>
                     <td className="user-item">{(props.user?.id)?.substring(0, 5)}</td>
                     <td className="user-item">{props.user?.username}</td>
                     <td className="user-item">{props.user?.first_name}
@@ -306,7 +315,7 @@ return(<>
                     <td className="user-item">
                         <button onClick={()=>{deleteuser(props.user?.id)}}>delete</button>
                     </td>
-
+                    </tr>
                 </tbody>
 </>);
 }

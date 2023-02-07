@@ -36,11 +36,14 @@ export default function UserForm() {
             formData.Phone_number=inputPhone_number.current?.value || "",
             formData.email=inputemail.current?.value || "",
             console.log(formData, typeof(formData))
+            const token=JSON.parse(localStorage.getItem('token') || "");
             const fetchOptions = {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
+                    Authorization: 'Bearer '+ token.token
+                    
                 },
                 body: JSON.stringify(formData),
             };
