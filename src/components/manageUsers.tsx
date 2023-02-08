@@ -6,6 +6,7 @@ import { SearchByAttr } from "./searchByAttr";
 import { useEffect } from "react";
 import {RefreshContext} from "@/state/RefreshContext";
 import { UserContext } from "@/state/RefreshContext";
+import Link from "next/link";
 
 interface userProperties{
     first_name: string,
@@ -72,17 +73,20 @@ const searchUsers=async()=>{
     console.log("search users!!");
     setComponents(<SearchByAttr/>)
 }
+const logout=()=>{
+    localStorage.clear();
+}
     return(<>
-    <nav className="user-bar">
-            <ul className="user-content">
-                <li className="user-list">
-                    <button className="user-link" onClick={createUsers}>Create users </button>
+    <nav className="flex items-center justify-between flex-wrap bg-white py-4 lg:px-12 shadow border-solid border-t-2 border-blue-700">
+            <ul className="flex w-full flex-wrap items-center h-10">
+                <li className="text-md font-bold text-blue-700 lg:flex-grow">
+                    <button className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" onClick={createUsers}>Create users </button>
+          
+                    <button className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" onClick={updateUsers}>Update users</button>
                 </li>
-                <li className="user-list">
-                    <button className="user-link" onClick={updateUsers}>Update users</button>
-                </li>
-                <li className="user-list">
-                    <button className="user-link" onClick={searchUsers}>Search users</button>
+                <li className="flex">
+                    <button className="block text-md px-4 py-2 rounded text-blue-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0" onClick={searchUsers}>Search users</button>
+                <Link className="block text-md px-4  ml-2 py-2 rounded text-blue-700 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0" href="/" onClick={logout}>Logout</Link>
                 </li>
             </ul>
         </nav>

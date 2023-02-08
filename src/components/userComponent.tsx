@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from "react";
-import {FaEdit} from  'react-icons/fa';
+import {FaCheck, FaClipboardCheck, FaEdit} from  'react-icons/fa';
 import {RefreshContext} from "@/state/RefreshContext";
 
 
@@ -154,29 +154,49 @@ export const UserComponent=(props: any)=>{
         // event?.preventDefault();
         const token=JSON.parse(localStorage.getItem('token') || "");
         console.log(id, formData);
-        if(formData.First_name==""){
-            delete formData.First_name;
+        if(formData.First_name!="" && formData.Last_name!="" && formData.Is_active!="" && formData.Phone_number!="" && formData.Is_admin!="" && formData.Password!="" && formData.email!=""){
+            //make put request
+            const fetchOptions = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: 'Bearer '+ token.token
+                },
+                body: JSON.stringify(formData),
+            };
+            console.log("here put request ", id, fetchOptions.body);
+            await fetch(url+'?ID='+id, fetchOptions).then(val=>{
+                console.log(val);
+                init_users();
+                setRefresh(!refresh);
+            }).catch(err=>{
+                console.log(err);
+            });
+            // init_users();
         }
-        if(formData.Last_name=="" ){
-            delete formData.Last_name;
-        }
-        if(formData.Password=="" ){
-            delete formData.Password;
-        }
-        if(formData.email==""){
-            delete formData.email;
-        }
-        if(formData.Phone_number=="" ){
-            delete formData.Phone_number;
-        }
-        if(formData.Is_active==""){
-            delete formData.Is_active;
-        }
-        if(formData.Is_admin==""){
-            delete formData.Is_admin;
-        }
-        
-    
+        else{
+            if(formData.First_name==""){
+                delete formData.First_name
+            }
+            if(formData.Last_name==""){
+                delete formData.Last_name
+            }
+            if(formData.Is_active==""){
+                delete formData.Is_active
+            }
+            if(formData.Is_admin==""){
+                delete formData.Is_admin
+            }
+            if(formData.Password==""){
+                delete formData.Password
+            }
+            if(formData.Phone_number==""){
+                delete formData.Phone_number
+            }
+            if(formData.email==""){
+                delete formData.email
+            }
         const fetchOptions = {
             method: "PATCH",
             headers: {
@@ -186,7 +206,7 @@ export const UserComponent=(props: any)=>{
             },
             body: JSON.stringify(formData),
         };
-        console.log("here", typeof(id), fetchOptions.body);
+        console.log("here patch request", fetchOptions.body);
         await fetch(url+'?ID='+id, fetchOptions).then(val=>{
             console.log(val);
             setRefresh(!refresh);
@@ -194,127 +214,118 @@ export const UserComponent=(props: any)=>{
         }).catch(err=>{
             console.log(err);
         });
-        init_users();
+        // init_users();
+    }
+        
 
     }
 
-    const updateAll=async(id: string)=>{
-        const token=JSON.parse(localStorage.getItem('token') || "");
-        const fetchOptions = {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                    Accept: "application/json",
-                    Authorization: 'Bearer '+ token.token
-            },
-            body: JSON.stringify(formData),
-        };
-        console.log("here put request ", id, fetchOptions.body);
-        await fetch(url+'?ID='+id, fetchOptions).then(val=>{
-            console.log(val);
-            init_users();
-            setRefresh(!refresh);
-        }).catch(err=>{
-            console.log(err);
-        });
-        init_users();
-        
-        
-    }
 
 return(<>
         {/* {console.log(props.user)} */}
-    <tbody className="users-list" key="{user.id}">
-        <tr>
-                    <td className="user-item">{(props.user?.id)?.substring(0, 5)}</td>
-                    <td className="user-item">{props.user?.username}</td>
-                    <td className="user-item">{props.user?.first_name}
+        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td className="px-6 py-4">{(props.user?.id)?.substring(0, 5)}</td>
+                    <td className="px-6 py-4">{props.user?.username}</td>
+                    <td className="px-6 py-4">{props.user?.first_name}
                     <FaEdit onClick={()=>{setEditfirst(!editfirst)}}/>
                     {
                         (editfirst)?
                         <form>
-                            <input id="First_name" type="text"  placeholder="enter value" ref={inputFirst_name}/>
+                            <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="First_name" type="text"  placeholder="enter value" ref={inputFirst_name}/>
                             <button  onClick={saveEditfirst}>confirm</button>
                         </form>
                         
                         : <></>
                     }
                     </td>
-                    <td className="user-item">{props.user?.last_name}<FaEdit onClick={()=>{setEditlast(!editlast)}}/>
+                    <td className="px-6 py-4">{props.user?.last_name}<FaEdit onClick={()=>{setEditlast(!editlast)}}/>
                     {
                         (editlast)?
                         <form>
-                            <input id="Last_name" type="text"  placeholder="enter value" ref={inputFirst_name}/>
+                            <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="Last_name" type="text"  placeholder="enter value" ref={inputFirst_name}/>
                             <button  onClick={saveEditlast}>confirm</button>
                         </form>
                         
                         : <></>
                     }
                     </td>
-                    <td className="user-item">{props.user?.email}<FaEdit onClick={()=>{setEditmail(!editmail)}}/>
+                    <td className="px-6 py-4">{props.user?.email}<FaEdit onClick={()=>{setEditmail(!editmail)}}/>
                     {
                         (editmail)?
                         <form>
-                            <input id="email" type="email"  placeholder="enter value" ref={inputFirst_name}/>
+                            <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="email" type="email"  placeholder="enter value" ref={inputFirst_name}/>
                             <button  onClick={saveEditemail}>confirm</button>
                         </form>
                         
                         : <></>
                     }
                     </td>
-                    <td className="user-item">{"*****"}<FaEdit onClick={()=>{setEditpass(!editpass)}}/>
+                    <td className="px-6 py-4">{"*****"}<FaEdit onClick={()=>{setEditpass(!editpass)}}/>
                     {
                         (editpass)?
                         <form>
-                            <input id="Password" type="password"  placeholder="enter value" ref={inputFirst_name}/>
+                            <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="Password" type="password"  placeholder="enter value" ref={inputFirst_name}/>
                             <button  onClick={saveEditpass}>confirm</button>
                         </form>
                         
                         : <></>
                     }
                     </td>
-                    <td className="user-item">{props.user?.phone_number}<FaEdit onClick={()=>{setEditphone(!editphone)}}/>
+                    <td className="px-6 py-4">{props.user?.phone_number}<FaEdit onClick={()=>{setEditphone(!editphone)}}/>
                     {
                         (editphone)?
                         <form>
-                            <input id="Phone_number" type="text"  placeholder="enter value" ref={inputFirst_name}/>
+                            <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="Phone_number" type="text"  placeholder="enter value" ref={inputFirst_name}/>
                             <button  onClick={saveEditphone}>confirm</button>
                         </form>
                         
                         : <></>
                     }</td>
-                    <td className="user-item">{String(props.user?.is_active)}<FaEdit onClick={()=>{setEditactive(!editactive)}}/>
+                    <td className="px-6 py-4">{String(props.user?.is_active)}<FaEdit onClick={()=>{setEditactive(!editactive)}}/>
                     {
                         (editactive)?
                         <form>
-                            yes<input type="checkbox" checked={active === "true"} onChange={() => setActive("true")}/>&ensp;
-                            no <input type="checkbox" checked={active === "false"} onChange={() => setActive("false")}/><br/>
+                            <input className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" checked={active === "true"} onChange={() => {
+                                if(active=="true"){
+                                    setActive("")
+                                }else{
+                                setActive("true")}}}/><label className="text-gray-700"  htmlFor="Is_active">yes</label>&ensp;
+                            <input className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" checked={active === "false"} onChange={() => {
+                                if(active=="false"){
+                                    setActive("")
+                                }else{
+                                setActive("false")}}}/><label className="text-gray-700"  htmlFor="Is_active">no</label><br/>
                             <button  onClick={saveEditactive}>confirm</button>
                         </form>
                         
                         : <></>
                     }</td>
-                    <td className="user-item">{String(props.user?.is_admin)}<FaEdit onClick={()=>{setEditadmin(!editadmin)}}/>
+                    <td className="px-6 py-4">{String(props.user?.is_admin)}<FaEdit onClick={()=>{setEditadmin(!editadmin)}}/>
                     {
                         (editadmin)?
                         <form>
-                            yes<input type="checkbox" checked={admin=== "true"} onChange={() => setAdmin("true")}/>&ensp;
-                            no <input type="checkbox" checked={admin === "false"} onChange={() => setAdmin("false")}/><br/>
+                            <input className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" checked={admin=== "true"} onChange={() => {
+                                if(admin=="true"){
+                                    setAdmin("");
+                                }else{
+                                    setAdmin("true")}}}/><label className="text-gray-700"  htmlFor="Is_admin">yes</label>&ensp;
+                            <input className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" checked={admin === "false"} onChange={() => {
+                                if(admin=="false"){
+                                    setAdmin("");
+                                }else{
+                                setAdmin("false")}}}/><label className="text-gray-700"  htmlFor="Is_admin">no</label><br/>
                             <button  onClick={saveEditadmin}>confirm</button>
                         </form>
                         
                         : <></>
                     }</td>
-                    <td className="user-item">
+                    <td className="px-6 py-4">
                         <button onClick={()=>{update(props.user?.id)}}>update</button>
                     </td>
-                    <td className="user-item">
-                        <button onClick={()=>{updateAll(props.user?.id)}}>update All</button>
-                    </td>
-                    <td className="user-item">
+                    <td className="px-6 py-4">
                         <button onClick={()=>{deleteuser(props.user?.id)}}>delete</button>
                     </td>
                     </tr>
-                </tbody>
+                
 </>);
 }

@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from "react";
 import { UserComponent } from "./userComponent";
 const url='http://localhost:8000/api/users';
 import { UserContext } from "@/state/RefreshContext";
+import { Dropdown } from "flowbite";
 
 
 interface userProperties{
@@ -118,18 +119,38 @@ export const SearchByAttr=()=>{
     }
 
     return(<>
-    <input placeholder="username" ref={inputUsername}/><br/>
-    <input placeholder="id" ref={inputID} /><br/>
-    <input placeholder="first name"  ref={inputFirst_name} /><br/>
-    <input placeholder="last name" ref={inputLast_name} /><br/>
-    active
-    &ensp; yes<input type="checkbox" checked={active === "true"} onChange={() => setActive("true")}/>&ensp;
-    no <input type="checkbox" checked={active === "false"} onChange={() => setActive("false")}/><br/>
-    admin
-    &ensp; yes<input type="checkbox" checked={admin=== "true"} onChange={() => setAdmin("true")}/>
-    no <input type="checkbox" checked={admin === "false"} onChange={() => setAdmin("false")}/>
+    
+    
+    <input className="appearance-none bg-transparent border-4 border-b-indigo-600 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="username" ref={inputUsername}/>
+    <input className="appearance-none bg-transparent border-4 border-b-indigo-600 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="id" ref={inputID} />
+    <input className="appearance-none bg-transparent border-4 border-b-indigo-600 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="first name"  ref={inputFirst_name}/>
+    <input className="appearance-none bg-transparent border-4 border-b-indigo-600 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="last name" ref={inputLast_name} />
+    <label className="text-indigo-700">active</label>
+    &ensp; <input className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" checked={active === "true"} onChange={() =>{ if(active=="true"){
+        setActive("")
+    } 
+    else{setActive("true")}}}/> <label className="text-gray-700" htmlFor="Is_active">yes</label>&ensp;
+    
+    <input className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" checked={active === "false"} onChange={() => {
+     if(active=="false"){
+            setActive("");
+        }else{
+        setActive("false")}}
+        }/> <label className="text-gray-700" htmlFor="Is_active">no </label>&ensp;&ensp;
+    <label className="text-indigo-700" >admin</label>
+    &ensp; <input className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" checked={admin=== "true"} onChange={() => {
+        if(admin=="true"){
+            setAdmin("");
+        }else{
+        setAdmin("true")}}}/> <label className="text-gray-700"  htmlFor="Is_active">yes</label>&ensp;
+    <input className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" type="checkbox" checked={admin === "false"} onChange={() => {
+        if(admin=="false"){
+            setAdmin("");
+        }else{
+        setAdmin("false")}
+    }}/> <label className="text-gray-700"  htmlFor="Is_admin">no </label>&ensp;&ensp;
 
-    <button onClick={searchAtt}>search</button>
+    <button className="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-full" onClick={searchAtt}>search</button>
     {
             
             user.map((usr: Object)=>{

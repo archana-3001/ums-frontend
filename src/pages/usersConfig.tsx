@@ -31,12 +31,12 @@ export default function UsersConfig() {
   }, [])
     return (
         <>
-        <Layout>
+  
           {
           (authorized)?
-          <ManageUsers/>:<><h2>Login to continue</h2></>
+            <ManageUsers/>
+          :<><h2>Login to continue</h2></>
           }
-        </Layout>
           
          
         </>

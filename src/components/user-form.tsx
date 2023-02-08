@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function UserForm() {
     const inputFirst_name = useRef<HTMLInputElement>(null);
@@ -9,6 +9,13 @@ export default function UserForm() {
     const inputIs_admin=useRef<HTMLInputElement>(null);
     const inputPhone_number = useRef<HTMLInputElement>(null);
     const inputPassword=useRef<HTMLInputElement>(null);
+    const [first_name, setFirstName]=useState("");
+    const [last_name, setLastName]=useState("");
+    const [username, setUsername]=useState("");
+    const [phonenumber, SetPhoneNumber]=useState("");
+    const [password, setPassword]=useState("");
+    const [email, setEmail]=useState("");
+    const [createstatus, setCreateStatus]=useState<any>("");
 
     const formData={
         First_name: "",
@@ -49,7 +56,20 @@ export default function UserForm() {
             };
             console.log(fetchOptions.body);
             const response = await fetch(url, fetchOptions).then(val=>{
-                alert('user created');
+                // alert('user created');
+                if(val.status==200){
+                    alert('user created successfully!!');
+                }else{
+                    // console.log(val.json());
+                    const res=val.json().then(r=>{
+                        console.log(r);
+                        setCreateStatus(r);
+                    }).catch(err=>{
+                        console.log(err);
+                    })
+                    
+                    
+                }
                 console.log(val);
             }).catch(err=>{
                 console.log(err);
@@ -58,28 +78,68 @@ export default function UserForm() {
     }
     return (
         <>
-         <form>
-                <input id="username" type="text" ref={inputUsername} placeholder="Username" /><br/>
-                <input id="First_name" type="text" ref={inputFirst_name} placeholder="First_name" />&ensp;
-                <input id="Last_name" type="text" ref={inputLast_name} placeholder="Last_name"/>&ensp;
-                <input id="email" type="email" ref={inputemail} placeholder="email" />&ensp;
-                <input id="Phone_number" type="text" ref={inputPhone_number} placeholder="Phone_number" />&ensp;
-                <br/>
-                <label htmlFor="Is_active">
-                    active
-                <input id="Is_active" type="checkbox" ref={inputIs_active} placeholder="Is_active" />
-                &ensp;
-                </label>
+        
+        
+        <form className="w-full max-w-lg">
+  <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
+        First Name
+      </label>
+      <input onChange={()=>{setFirstName(inputFirst_name.current?.value || "")}} ref={inputFirst_name} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="First name"/>
+        {document.getElementById("grid-first-name")?.click && first_name.length<=0 && <p className="text-red-500 text-xs italic">Please fill out First Name</p>}
+    </div>
+    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
+        Last Name
+      </label>
+      <input  onChange={()=>{setLastName(inputLast_name.current?.value || "")}} ref={inputLast_name} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-last-name" type="text" placeholder="Last name"/>
+      {document.getElementById("grid-last-name")?.click && last_name.length<=0 &&<p className="text-red-500 text-xs italic">Please fill out Last Name</p>}
+    </div>
+    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-user-name">
+        Username
+      </label>
+      <input  ref={inputUsername} onChange={()=>{setUsername(inputUsername.current?.value || "")}}  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-user-name" type="text" placeholder="Username"/>
+      {document.getElementById("grid-user-name")?.click && username.length<=0 &&<p className="text-red-500 text-xs italic">Please fill out Username</p>}
+    </div>
+    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-email">
+        Email
+      </label>
+      <input  ref={inputemail} onChange={()=>{setEmail(inputemail.current?.value || "")}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-email" type="email" placeholder="email"/>
+      {document.getElementById("grid-email")?.click && email.length<=0 &&<p className="text-red-500 text-xs italic">Please fill out Email</p>}
+    </div>
+    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-phone-number">
+        Phone Number
+      </label>
+      <input  ref={inputPhone_number} onChange={()=>{SetPhoneNumber(inputPhone_number.current?.value || "")}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-phone-number" type="text" placeholder="Phone Number"/>
+      {document.getElementById("grid-phone-number")?.click &&  phonenumber.length<=0 &&<p className="text-red-500 text-xs italic">Please fill out Phone Number</p>}
+    </div>
+    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
+        Password
+      </label>
+      <input  ref={inputPassword} onChange={()=>{setPassword(inputPassword.current?.value || "")}} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-password" type="password" />
+      {document.getElementById("grid-password")?.click && password.length<=0 &&<p className="text-red-500 text-xs italic">Please fill out Password</p>}
+    </div>
+        </div>
+        <div className="md:flex md:items-center">
+    <div className="md:w-1/3"></div>
+    <div className="md:w-2/3">
+      <button className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button"  onClick={createUser}>
+        Create
+      </button>
+    </div>
+    
+  </div>
                 
-                <label htmlFor="Is_admin"> admin
-                <input id="Is_admin" type="radio" ref={inputIs_admin} placeholder="Is_admin" />
-                </label>
-                <br/>
-                <input type="password"  id="password" ref={inputPassword} placeholder="Password" />
-                <br/>
-                <button type="submit" onClick={createUser}>Create</button>
-                <button type="reset">Reset</button>
+           
             </form>
+            {
+                createstatus
+            }
         </>
     )
 }

@@ -16,6 +16,11 @@ type userProperties={
   setUser: React.Dispatch<React.SetStateAction<userProperties>>;
 }
 
+type AdminContextValue={
+  IsAdmin: boolean;
+  setAdmin: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 type RefreshContextValue = {
     refresh: boolean;
     setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
@@ -46,5 +51,9 @@ const RefreshContext = React.createContext<RefreshContextValue>({
     setRefresh: () => {},
   });
   
+const AdminContext=React.createContext<AdminContextValue>({
+  IsAdmin: false, 
+  setAdmin: ()=>{},
+})
 
-export { RefreshContext, UserContext};
+export { RefreshContext, UserContext, AdminContext};

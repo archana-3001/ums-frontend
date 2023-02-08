@@ -1,7 +1,4 @@
 import '@/styles/globals.css'
-import '@/styles/nav.css';
-import '@/styles/login-form.css';
-import '@/styles/list-users.css';
 
 
 

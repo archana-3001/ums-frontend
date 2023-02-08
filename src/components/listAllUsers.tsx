@@ -6,70 +6,70 @@ export const ListAllUsers=()=>{
     const {user, setUser}=useContext<any>(UserContext);
     return(
         <>
-        list all users 
-        <table className="users-lists-table">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         
-                <thead className="users-list-heading">
-                <tr>
-                    <td className="user-item">
-                        id
-                    </td>
-                    <td className="user-item">
-                        username
-                    </td>
-                    <td className="user-item">
-                        first name
-                    </td>
-                    <td className="user-item">
-                        last name
-                    </td>
-                    <td className="user-item">
-                        email
-                    </td>
-                    <td className="user-item">
-                        password
-                    </td>
-                    <td className="user-item">
-                        phone number
-                    </td>
-                    <td className="user-item">
-                        active
-                    </td>
-                    <td className="user-item">
-                        admin
-                    </td>
-                    <td className="user-item">
-                        update
-                    </td>
-                    <td className="user-item">
-                        update-all
-                    </td>
-                    <td className="user-item">
-                        delete
-                    </td>
-                    </tr>
-                </thead>
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+            <th scope="col" className="px-6 py-3">
+                    id
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    username
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    first name
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    last name
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    email
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    password
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    contact
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    active
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    admin
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    update
+            </th>
+            <th scope="col" className="px-6 py-3">
+                    delete
+            </th>
+            </tr>
+        </thead>
 
-        
 
-        {
-            
-            user.map((usr: Object)=>{
+        <tbody>
+{
+    
+    user.map((usr: Object)=>{
 
-                // console.log("from listAllUsers",usr)
-                return(
-                <>
-                <UserComponent user={usr}  />
-                
-                </>
-                )
-                
-            })    
-            
-        }
+        // console.log("from listAllUsers",usr)
+        return(
+        <>
+        <UserComponent user={usr}  />
         
+        </>
+        )
         
-        </table>
+    })    
+    
+}
+</tbody>
+
+
+</table>
+        </div>
+        
         </>
         
     
