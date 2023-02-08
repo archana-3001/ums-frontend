@@ -27,7 +27,7 @@ const formData: FormData={
 
 const url='http://localhost:8000/api/users';
 
-export const UserComponent=(props: any)=>{
+export const UserComponent=(props: any)=>{   
     const {refresh, setRefresh}=useContext(RefreshContext);
     const [editfirst, setEditfirst]=useState(false);
     const [editlast, setEditlast]=useState(false);
@@ -36,7 +36,7 @@ export const UserComponent=(props: any)=>{
     const [editactive, setEditactive]=useState(false);
     const [editadmin, setEditadmin]=useState(false);
     const [editphone, setEditphone]=useState(false);
-
+ 
     const inputFirst_name = useRef<HTMLInputElement>(null);
     const [active, setActive] =useState("");
     const [admin, setAdmin]=useState("");

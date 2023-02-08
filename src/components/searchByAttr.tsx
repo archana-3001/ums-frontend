@@ -120,7 +120,7 @@ export const SearchByAttr=()=>{
 
     return(<>
     
-    
+    <div className="shadow-md sm:rounded-lg">
     <input className="appearance-none bg-transparent border-4 border-b-indigo-600 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="username" ref={inputUsername}/>
     <input className="appearance-none bg-transparent border-4 border-b-indigo-600 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="id" ref={inputID} />
     <input className="appearance-none bg-transparent border-4 border-b-indigo-600 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" placeholder="first name"  ref={inputFirst_name}/>
@@ -166,5 +166,8 @@ export const SearchByAttr=()=>{
             })    
             
         }
+
+    </div>
+    
     </>)
 }

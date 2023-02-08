@@ -1,4 +1,3 @@
-import { Layout } from "@/components/layout";
 import { ManageUsers } from "@/components/manageUsers";
 import { useEffect, useState } from "react";
 

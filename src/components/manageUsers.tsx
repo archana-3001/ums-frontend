@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import {RefreshContext} from "@/state/RefreshContext";
 import { UserContext } from "@/state/RefreshContext";
 import Link from "next/link";
+import { FaCaretDown } from "react-icons/fa";
+
 
 interface userProperties{
     first_name: string,
@@ -25,6 +27,7 @@ export const ManageUsers=()=>{
     // const [users, setUsers]=useState<userProperties[]>([]);
     const {user, setUser}=useContext<any>(UserContext);
     const [components, setComponents] = useState(<UserForm/>); 
+    const [drawers, setDrawer]=useState(false);
     
     
     useEffect(()=>{
@@ -61,34 +64,67 @@ export const ManageUsers=()=>{
 const createUsers=async()=>{
     console.log("create users");
     setComponents(<UserForm/>);
+    setDrawer(!drawers);
 
 }
 
 const updateUsers=async()=>{
     console.log("update users")
     setComponents(<ListAllUsers/>);
+    setDrawer(!drawers);
 }
 
 const searchUsers=async()=>{
     console.log("search users!!");
     setComponents(<SearchByAttr/>)
+    setDrawer(!drawers);
 }
 const logout=()=>{
     localStorage.clear();
 }
     return(<>
     <nav className="flex items-center justify-between flex-wrap bg-white py-4 lg:px-12 shadow border-solid border-t-2 border-blue-700">
-            <ul className="flex w-full flex-wrap items-center h-10">
-                <li className="text-md font-bold text-blue-700 lg:flex-grow">
+    <ul className="flex w-full flex-wrap items-center h-10">
+    <li className="text-md font-bold text-blue-700 lg:flex-grow">
+        <button className="dropdown-toggle
+          px-6
+          py-2.5
+          bg-blue-600
+          text-white
+          font-medium
+          text-xs
+          leading-tight
+          uppercase
+          rounded
+          shadow-md
+          hover:bg-blue-700 hover:shadow-lg
+          focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+          active:bg-blue-800 active:shadow-lg active:text-white
+          transition
+          duration-150
+          ease-in-out
+          flex
+          items-center
+          whitespace-nowrap
+        " onClick={()=>{setDrawer(!drawers)}}>Manage Users<FaCaretDown/></button>
+        {
+           (drawers)? <ul className="absolute z-50">
+    
+                <li>
                     <button className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" onClick={createUsers}>Create users </button>
-          
+                </li><li>
                     <button className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" onClick={updateUsers}>Update users</button>
                 </li>
-                <li className="flex">
-                    <button className="block text-md px-4 py-2 rounded text-blue-700 ml-2 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0" onClick={searchUsers}>Search users</button>
-                <Link className="block text-md px-4  ml-2 py-2 rounded text-blue-700 font-bold hover:text-white mt-4 hover:bg-blue-700 lg:mt-0" href="/" onClick={logout}>Logout</Link>
+                <li>
+                    <button className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" onClick={searchUsers}>Search users</button></li>
+                    <li>
+                <Link className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" href="/" onClick={logout}>Logout</Link>
                 </li>
-            </ul>
+            </ul>:<></>
+            }
+        </li>
+        </ul>
+            
         </nav>
         <ListComponent text={components}/>
     </>);
