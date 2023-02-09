@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function UsersConfig() {
   const [authorized, setAuthorized]=useState<String | Boolean>(false);
+  const [initialRenderComplete, setInitialRenderComplete]=useState(false);
   useEffect(()=>{
     const tok=localStorage.getItem("token")|| "";
     if(tok!=""){
@@ -27,7 +28,9 @@ export default function UsersConfig() {
         }
       }
     }    
+    setInitialRenderComplete(true);
   }, [])
+  if(initialRenderComplete){
     return (
         <>
   
@@ -39,5 +42,7 @@ export default function UsersConfig() {
           
          
         </>
-      )
+ 
+        )
+  }
 }

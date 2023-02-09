@@ -108,19 +108,21 @@ const logout=()=>{
           whitespace-nowrap
         " onClick={()=>{setDrawer(!drawers)}}>Manage Users<FaCaretDown/></button>
         {
-           (drawers)? <ul className="absolute z-50">
+           (drawers)? <div className="absolute z-50 bg-blue-200">
     
-                <li>
-                    <button className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" onClick={createUsers}>Create users </button>
-                </li><li>
-                    <button className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" onClick={updateUsers}>Update users</button>
-                </li>
-                <li>
-                    <button className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" onClick={searchUsers}>Search users</button></li>
-                    <li>
-                <Link className="block mt-4 lg:inline-block lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-blue-700 mr-2" href="/" onClick={logout}>Logout</Link>
-                </li>
-            </ul>:<></>
+                <div className=" mt-4 hover:text-white px-6 py-2 hover:bg-blue-600">
+                    <button  onClick={createUsers}>Create users </button>
+                </div>
+                <div className=" mt-4 hover:text-white px-6 py-2 hover:bg-blue-600">
+                    <button  onClick={updateUsers}>Update users</button>
+                </div>
+                <div className=" mt-4 hover:text-white px-6 py-2 hover:bg-blue-600">
+                    <button  onClick={searchUsers}>Search users</button>
+                    </div>
+                    <div className=" mt-4 hover:text-white px-6 py-2 hover:bg-blue-600">
+                <Link  href="/" onClick={logout}>Logout</Link>
+                </div>
+            </div>:<></>
             }
         </li>
         </ul>
