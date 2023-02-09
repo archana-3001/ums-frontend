@@ -1,4 +1,6 @@
+import { RefreshContext } from "@/state/RefreshContext";
 import { useRef, useState } from "react";
+import { FaCheckCircle, FaCircleNotch } from "react-icons/fa";
 
 export default function UserForm() {
     const inputFirst_name = useRef<HTMLInputElement>(null);
@@ -9,6 +11,7 @@ export default function UserForm() {
     const inputIs_admin=useRef<HTMLInputElement>(null);
     const inputPhone_number = useRef<HTMLInputElement>(null);
     const inputPassword=useRef<HTMLInputElement>(null);
+    const form=useRef<any>();
     const [first_name, setFirstName]=useState("");
     const [last_name, setLastName]=useState("");
     const [username, setUsername]=useState("");
@@ -27,12 +30,14 @@ export default function UserForm() {
         Phone_number: "",
         Password: ""
     }
+
     const url='http://localhost:8000/api/users';
 
     const createUser=async (event: any)=>{
         event?.preventDefault();       
             // console.log(inputFirst_name.current?.value,"\n", 
             // inputIs_active.current?.checked , "\n" ,inputIs_admin.current?.checked, "\n",inputLast_name.current?.value, 
+            
             //     inputPassword.current?.value, inputUsername.current?.value, inputemail.current?.value, inputPhone_number.current?.value);
             formData.First_name= inputFirst_name.current?.value || "",
             formData.Last_name= inputLast_name.current?.value || "",
@@ -58,7 +63,7 @@ export default function UserForm() {
             const response = await fetch(url, fetchOptions).then(val=>{
                 // alert('user created');
                 if(val.status==200){
-                    alert('user created successfully!!');
+                    setCreateStatus('user created successfully!!');
                 }else{
                     // console.log(val.json());
                     const res=val.json().then(r=>{
@@ -80,7 +85,7 @@ export default function UserForm() {
         <>
         
         <div className="grid h-screen place-items-center">
-        <form className="w-full max-w-lg">
+        <form className="w-full max-w-lg" ref={form}>
   <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
@@ -138,8 +143,19 @@ export default function UserForm() {
            
             </form>
             {
-                createstatus
-            }
+        (createstatus!="")?
+            <div className="bg-slate-800 bg-opacity-50 flex justify-center items-center absolute top-0 right-0 bottom-0 left-0">
+                <div className="bg-white px-16 py-14 rounded-md text-center">
+                  <h1 className="text-xl mb-4 font-bold text-slate-500">{createstatus}</h1>
+                  {
+                    (createstatus=="user created successfully!!")?<button className="bg-green-500 px-4 py-2 rounded-md text-md text-white" onClick={()=>{ form.current?.reset(), setCreateStatus("")}}>ok</button>:<button className="bg-red-500 px-4 py-2 rounded-md text-md text-white" onClick={()=>setCreateStatus("")}>ok</button>
+                  }
+                  
+                </div>
+              </div>
+          : <></>
+          
+      }
         </div>
      
         </>
