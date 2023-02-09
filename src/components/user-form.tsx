@@ -62,7 +62,7 @@ export default function UserForm() {
             console.log(fetchOptions.body);
             const response = await fetch(url, fetchOptions).then(val=>{
                 // alert('user created');
-                if(val.status==200){
+                if(val.status==201){
                     setCreateStatus('user created successfully!!');
                 }else{
                     // console.log(val.json());

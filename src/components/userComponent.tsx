@@ -232,7 +232,7 @@ return(<>
                         (editfirst)?
                         <form>
                             <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="First_name" type="text"  placeholder="enter value" ref={inputFirst_name}/>
-                            <button  onClick={saveEditfirst}>confirm</button>
+                            <button className="text-green-500" onClick={saveEditfirst}>confirm</button>
                         </form>
                         
                         : <></>
@@ -243,7 +243,7 @@ return(<>
                         (editlast)?
                         <form>
                             <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="Last_name" type="text"  placeholder="enter value" ref={inputFirst_name}/>
-                            <button  onClick={saveEditlast}>confirm</button>
+                            <button className="text-green-500" onClick={saveEditlast}>confirm</button>
                         </form>
                         
                         : <></>
@@ -254,7 +254,7 @@ return(<>
                         (editmail)?
                         <form>
                             <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="email" type="email"  placeholder="enter value" ref={inputFirst_name}/>
-                            <button  onClick={saveEditemail}>confirm</button>
+                            <button className="text-green-500"  onClick={saveEditemail}>confirm</button>
                         </form>
                         
                         : <></>
@@ -265,7 +265,7 @@ return(<>
                         (editpass)?
                         <form>
                             <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="Password" type="password"  placeholder="enter value" ref={inputFirst_name}/>
-                            <button  onClick={saveEditpass}>confirm</button>
+                            <button className="text-green-500" onClick={saveEditpass}>confirm</button>
                         </form>
                         
                         : <></>
@@ -276,7 +276,7 @@ return(<>
                         (editphone)?
                         <form>
                             <input className="appearance-none bg-transparent border-1 border-t-transparent border-l-transparent border-b-indigo-600 text-gray-700 mr-1 py-1 px-1 leading-tight focus:outline-none" id="Phone_number" type="text"  placeholder="enter value" ref={inputFirst_name}/>
-                            <button  onClick={saveEditphone}>confirm</button>
+                            <button className="text-green-500" onClick={saveEditphone}>confirm</button>
                         </form>
                         
                         : <></>
@@ -295,7 +295,7 @@ return(<>
                                     setActive("")
                                 }else{
                                 setActive("false")}}}/><label className="text-gray-700"  htmlFor="Is_active">no</label><br/>
-                            <button  onClick={saveEditactive}>confirm</button>
+                            <button className="text-green-500" onClick={saveEditactive}>confirm</button>
                         </form>
                         
                         : <></>
@@ -314,16 +314,16 @@ return(<>
                                     setAdmin("");
                                 }else{
                                 setAdmin("false")}}}/><label className="text-gray-700"  htmlFor="Is_admin">no</label><br/>
-                            <button  onClick={saveEditadmin}>confirm</button>
+                            <button className="text-green-500" onClick={saveEditadmin}>confirm</button>
                         </form>
                         
                         : <></>
                     }</td>
                     <td className="px-6 py-4">
-                        <button onClick={()=>{update(props.user?.id)}}>update</button>
+                        <button className="bg-blue-600 px-4 py-2 rounded-md text-md  text-white" onClick={()=>{update(props.user?.id)}}>update</button>
                     </td>
                     <td className="px-6 py-4">
-                        <button onClick={()=>{deleteuser(props.user?.id)}}>delete</button>
+                        <button  className="bg-red-600 px-4 py-2 rounded-md text-md  text-white" onClick={()=>{deleteuser(props.user?.id)}}>delete</button>
                     </td>
                     </tr>
                 
