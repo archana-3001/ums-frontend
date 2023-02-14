@@ -77,7 +77,7 @@ const updateUsers=async()=>{
 const searchUsers=async()=>{
     console.log("search users!!");
     setComponents(<SearchByAttr/>)
-    setDrawer(!drawers);
+    setDrawer(!drawers)
 }
 const logout=()=>{
     localStorage.clear();

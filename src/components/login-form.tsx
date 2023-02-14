@@ -24,7 +24,7 @@ export default function LoginForm() {
       setAdmin(false);
     }
     setInitialRenderComplete(true);
-  }, [])
+  }, [IsAdmin])
   
 
 

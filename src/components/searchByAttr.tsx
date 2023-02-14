@@ -39,11 +39,11 @@ export const SearchByAttr=()=>{
     const {user, setUser}=useContext<any>(UserContext);
 
     const searchAtt=()=>{
-        console.log(inputID.current?.value);
-        console.log(inputFirst_name.current?.value);
-        console.log(inputLast_name.current?.value);
-        console.log(inputUsername.current?.value);
-        console.log("admin: ",admin, " , active: ", active)
+        // console.log(inputID.current?.value);
+        // console.log(inputFirst_name.current?.value);
+        // console.log(inputLast_name.current?.value);
+        // console.log(inputUsername.current?.value);
+        // console.log("admin: ",admin, " , active: ", active)
         const filterUser: FormData={
             First_name:inputFirst_name.current?.value || "",
             Last_name: inputLast_name.current?.value || "",
