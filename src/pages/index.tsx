@@ -1,13 +1,21 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
-import LoginForm from '@/components/login-form'
 import { Layout } from '@/components/layout'
 import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { lazy } from 'react'
 
+// import { getHistoricalMessages } from "../lib/history";
 const inter = Inter({ subsets: ['latin'] })
+
+
+const LoginFormComponent=(dynamic(async()=>(await import('../components/login-form')).LoginFormComponent, {
+  ssr: false,
+}))
 
 export default function Home() {
   const [initialRenderComplete, setInitialRenderComplete]=useState(false);
+ 
   useEffect(()=>{
     setInitialRenderComplete(true);
   },[])
@@ -23,12 +31,9 @@ export default function Home() {
         <body>
         <main>
         
-        <Layout>
-         <LoginForm/>
- 
-  
-        </Layout>
-        
+      <Layout>
+        <LoginFormComponent/>
+      </Layout>
       </main>
         
         </body>

@@ -4,23 +4,35 @@ import { ListComponent } from "./listComponet";
 import { ListAllUsers } from "./listAllUsers";
 import { SearchByAttr } from "./searchByAttr";
 import { useEffect } from "react";
+import {ImageComponent} from "./imageComponent";
 import {RefreshContext} from "@/state/RefreshContext";
 import { UserContext } from "@/state/RefreshContext";
 import Link from "next/link";
-import { FaCaretDown } from "react-icons/fa";
-
+import { FaArrowCircleLeft, FaCaretDown } from "react-icons/fa";
+import { Suspense } from 'react';
+import  {Dropdown}  from "@delhivery/orca-ui";
+import dynamic from "next/dynamic";
+import {
+	ChevronDownIcon,
+} from "@heroicons/react/outline";
 
 interface userProperties{
-    first_name: string,
-    last_name: string,
+    firstName: string,
+    lastName: string,
     email: string,
     password: string,
-    is_active: boolean,
-    is_admin: boolean,
+    isActive: boolean,
+    isAdmin: boolean,
     phone_number: string,
     id: string,
     username: string
 }
+
+// const ImageComponent=dynamic(async()=> (await import('./imageComponent')).ImageComponent, {
+//     ssr: false
+// })
+
+
 
 export const ManageUsers=()=>{
     const {refresh, setRefresh}=useContext(RefreshContext);
@@ -28,39 +40,57 @@ export const ManageUsers=()=>{
     const {user, setUser}=useContext<any>(UserContext);
     const [components, setComponents] = useState(<UserForm/>); 
     const [drawers, setDrawer]=useState(false);
+    const [token, setToken]=useState("");
+    const [isModifyColumnsModalOpen, setIsModifyColumnsModalOpen] =
+		useState(false);
     
+    const dropDownItemsConfig = [
+		{
+			dropdownItemName: "Modify Columns",
+			handlerFunction: () => setIsModifyColumnsModalOpen(true),
+		},
+        {
+            dropdownItemName: "create",
+            handlerFunction: () => setComponents(<UserForm/>),
+        },{
+            dropdownItemName: 'update',
+            handlerFunction: () => setComponents(<ListAllUsers/>)
+        }
+	];
     
     useEffect(()=>{
         console.log("refresh......", refresh);
         // console.log(token.token);
-        const tok=localStorage.getItem('token') || "";
-        if(tok!=""){
-        const token=JSON.parse(tok);
+        // const tok=localStorage.getItem('token') || "";
+        // if(tok!=""){
+        // const token=JSON.parse(tok);
+        
+        // let token=localStorage.getItem("APItoken") || "";
+        // if(token.length>2){
         const fetchOptions = {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
-                Authorization: 'Bearer ' + token.token
             },
+           
         };
-        const url='http://localhost:8000/api/users';
+        const url='http://localhost:8004/app/test-arc/api/users';
         const getAllUsers=async ()=>{
             const response=await fetch(url, fetchOptions);
-            const json: []=await response.json();
-            var arr: userProperties[]=[]
-            Object.values(json).forEach(data=>{
-                // console.log(data);
-                arr.push(data);
-                // setUsers([...arr]);
-            })
-            setUser([...arr]);
-            // console.log(users);
+            if(response.status==200){
+                const json=await response.json();
+                // console.log(json.data.entityInstances);
+                setUser([...json?.data?.entityInstances]);
+            }
+            // setToken("token set");
         }
+    
         getAllUsers();
-    }
+    // }
+    // }
         
-    }, [components, refresh]);
+    }, [components, user]);
 const createUsers=async()=>{
     console.log("create users");
     setComponents(<UserForm/>);
@@ -70,22 +100,32 @@ const createUsers=async()=>{
 
 const updateUsers=async()=>{
     console.log("update users")
+    // let token=localStorage.getItem("APItoken") || "";
+    //     if(token.length>2){
     setComponents(<ListAllUsers/>);
     setDrawer(!drawers);
+        // }
 }
 
 const searchUsers=async()=>{
     console.log("search users!!");
+    // let token=localStorage.getItem("APItoken") || "";
+    //     if(token.length>2){
+    
     setComponents(<SearchByAttr/>)
     setDrawer(!drawers)
+        // }
 }
 const logout=()=>{
     localStorage.clear();
 }
     return(<>
-    <nav className="flex items-center justify-between flex-wrap bg-white py-4 lg:px-12 shadow border-solid border-t-2 border-blue-700">
-    <ul className="flex w-full flex-wrap items-center h-10">
-    <li className="text-md font-bold text-blue-700 lg:flex-grow">
+    <nav className="flex items-center justify-between flex-wrap bg-white py-5 lg:px-12 shadow border-solid border-t-2 border-blue-700">
+    <ul className="flex w-full flex-wrap items-center h-50 ">
+        <li className="text-md font-bold text-blue-700 lg:flex-auto flex-direction: row-reverse">
+            <ImageComponent/>
+        </li>
+    <li className="text-md font-bold text-blue-700 lg:flex-auto">
         <button className="dropdown-toggle
           px-6
           py-2.5
@@ -125,9 +165,21 @@ const logout=()=>{
             </div>:<></>
             }
         </li>
+        <li className="text-md font-bold text-blue-700 lg:flex-auto">
+        <Dropdown
+								label={"ManageUsers"}
+								Icon={ChevronDownIcon}
+								dropdownItems={dropDownItemsConfig}
+							/>
+        </li>
+        
         </ul>
             
         </nav>
+        <Suspense fallback={<div>Loading...</div>}>
+        
         <ListComponent text={components}/>
+        </Suspense>
+        
     </>);
 }

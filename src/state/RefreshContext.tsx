@@ -1,14 +1,15 @@
+import { type } from "os";
 import React from "react";
 
 
 type userProperties={
   user:{
-  first_name: string,
-  last_name: string,
+  firstName: string,
+  lastName: string,
   email: string,
   password: string,
-  is_active: string | boolean,
-  is_admin: string | boolean,
+  isActive: string | boolean,
+  isAdmin: string | boolean,
   phone_number: string,
   id: string,
   username: string
@@ -16,10 +17,20 @@ type userProperties={
   setUser: React.Dispatch<React.SetStateAction<userProperties>>;
 }
 
+type tokenProperties={
+  token:{
+    value: string | undefined,
+    generatedAt: number | undefined
+  },
+  setToken: React.Dispatch<React.SetStateAction<tokenProperties>>;
+}
+
 type AdminContextValue={
   IsAdmin: boolean;
   setAdmin: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+
 
 type RefreshContextValue = {
     refresh: boolean;
@@ -30,14 +41,20 @@ type UserContextValue={
   user: userProperties,
   setUser: React.Dispatch<React.SetStateAction<userProperties>>;
 }
+
+type TokenContextValue={
+  token: tokenProperties,
+  setToken: React.Dispatch<React.SetStateAction<tokenProperties>>;
+}
+
 const UserContext =React.createContext<userProperties | undefined>({
   user:{
-  first_name: "",
-  last_name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
-  is_active: "",
-  is_admin: "",
+  isActive: "",
+  isAdmin: "",
   phone_number: "",
   username: "",
   id: "",
@@ -45,6 +62,14 @@ const UserContext =React.createContext<userProperties | undefined>({
   setUser: ()=>{}
 
 });
+
+const TokenContext=React.createContext<tokenProperties | undefined>({
+  token: {
+    value: "",
+    generatedAt: 0
+  }, 
+  setToken: ()=>{}
+})
 
 const RefreshContext = React.createContext<RefreshContextValue>({
     refresh: false,
@@ -56,4 +81,4 @@ const AdminContext=React.createContext<AdminContextValue>({
   setAdmin: ()=>{},
 })
 
-export { RefreshContext, UserContext, AdminContext};
+export { RefreshContext, UserContext, AdminContext, TokenContext};
